@@ -21,11 +21,13 @@ except ImportError:
 
 # Simplified import handling with clear fallback chain
 try:
-    from deepseek_cli.api.client import APIClient
-    from deepseek_cli.handlers.chat_handler import ChatHandler
-    from deepseek_cli.handlers.command_handler import CommandHandler
-    from deepseek_cli.handlers.error_handler import ErrorHandler
+    # When installed via pip/pipx (package_dir={"": "src"})
+    from api.client import APIClient
+    from handlers.chat_handler import ChatHandler
+    from handlers.command_handler import CommandHandler
+    from handlers.error_handler import ErrorHandler
 except ImportError:
+    # When running from source (development mode)
     from src.api.client import APIClient
     from src.handlers.chat_handler import ChatHandler
     from src.handlers.command_handler import CommandHandler

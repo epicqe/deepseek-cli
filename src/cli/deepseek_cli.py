@@ -23,13 +23,13 @@ except ImportError:
 try:
     # When installed via pip/pipx (package_dir={"": "src"})
     from api.client import APIClient
-    from handlers.chat_handler import ChatHandler
+    from handlers.chat_handler import ChatHandler, DEFAULT_SYSTEM_MESSAGE
     from handlers.command_handler import CommandHandler
     from handlers.error_handler import ErrorHandler
 except ImportError:
     # When running from source (development mode)
     from src.api.client import APIClient
-    from src.handlers.chat_handler import ChatHandler
+    from src.handlers.chat_handler import ChatHandler, DEFAULT_SYSTEM_MESSAGE
     from src.handlers.command_handler import CommandHandler
     from src.handlers.error_handler import ErrorHandler
 
@@ -78,7 +78,7 @@ class DeepSeekCLI:
     def run(self) -> None:
         """Run the CLI interface"""
         # Set initial system message
-        self.chat_handler.set_system_message("You are a helpful assistant.")
+        self.chat_handler.set_system_message(DEFAULT_SYSTEM_MESSAGE)
 
         self._print_welcome()
 
@@ -113,7 +113,7 @@ class DeepSeekCLI:
     def run_inline_query(self, query: str, model: Optional[str] = None, raw: bool = False) -> str:
         """Run a single query and return the response"""
         # Set initial system message
-        self.chat_handler.set_system_message("You are a helpful assistant.")
+        self.chat_handler.set_system_message(DEFAULT_SYSTEM_MESSAGE)
 
         # Set model if specified
         if model and model in ["deepseek-chat", "deepseek-coder", "deepseek-reasoner"]:

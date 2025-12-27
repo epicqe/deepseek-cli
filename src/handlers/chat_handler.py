@@ -35,6 +35,18 @@ except ImportError:
     )
     from src.utils.version_checker import check_version
 
+
+#DEFAULT_SYSTEM_MESSAGE = (
+#    "You are programming and system administration assistant. You are managing Linux Debian 13 operating system with zsh shell. "
+#    "Provide short responses in about 150 words, unless you are specifically asked for more details. If you need to store any data, assume it will be stored in the conversation. "
+#    "APPLY MARKDOWN formatting when possible. Please provide all responses in valid JSON format when JSON mode is enabled."
+#)
+DEFAULT_SYSTEM_MESSAGE = (
+    "You are programming and system administration assistant. You are managing Linux Debian 13 operating system with zsh shell. "
+    "Provide short responses in about 150 words, unless you are specifically asked for more details. If you need to store any data, assume it will be stored in the conversation. "
+    "APPLY MARKDOWN formatting when possible."
+)
+
 class ChatHandler:
     def __init__(self, *, stream: bool = False) -> None:
         self.messages: List[Dict[str, Any]] = []
@@ -78,9 +90,11 @@ class ChatHandler:
         """Toggle JSON output mode"""
         self.json_mode = not self.json_mode
         if self.json_mode:
-            self.set_system_message("You are a helpful assistant. Please provide all responses in valid JSON format.")
+            self.set_system_message(
+                f"{DEFAULT_SYSTEM_MESSAGE} Respond in valid JSON only."
+            )
         else:
-            self.set_system_message("You are a helpful assistant.")
+            self.set_system_message(DEFAULT_SYSTEM_MESSAGE)
 
     def toggle_stream(self) -> None:
         """Toggle streaming mode"""
